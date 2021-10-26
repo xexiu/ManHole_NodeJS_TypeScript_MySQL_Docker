@@ -1,0 +1,27 @@
+.expo/*
+.expo-shared
+.vscode
+.env
+.photoshop
+.quokka
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Folders
+web-build/
+web-report/
+RoadMap
+assets/images/avatars
+photoshop
+node_modules/**/*
+node_modules
+npm-debug.*
+coverage
+backend
+
+# macOS
+.DS_Store
