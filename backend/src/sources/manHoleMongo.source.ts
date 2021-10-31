@@ -1,4 +1,6 @@
-import { MongoClient, MongoOptions } from 'mongodb';
+import { Db, MongoClient, MongoOptions } from 'mongodb';
+import mockManHole from '../../mongo/manHoleApp/manHole.json';
+import { MONGO_CONF } from '../constants/mongoConf';
 import ManHole from '../core/entities/ManHole.entity';
 import ManHoleInterface from '../core/interfaces/ManHole.interface';
 import ManHoleRepository from '../core/repositories/manHole.repository';
@@ -9,7 +11,14 @@ const mongodbOptions = {
     useUnifiedTopology: true
 } as unknown as MongoOptions
 
-class ManHoleMongo implements ManHoleRepository {
+const getConnectionOrDefault = (db: Db, collectionName = MONGO_CONF.DEFAULT_COLLECTION) => {
+    return db.collection(collectionName);
+}
+
+export default class ManHoleMongo implements ManHoleRepository {
+    client: MongoClient;
+    db: Db;
+
     public async getByGUID(id: string): Promise<ManHoleInterface> {
         const collection = await this.getCollection();
         const manHole = await collection.findOne({ id });
@@ -17,20 +26,33 @@ class ManHoleMongo implements ManHoleRepository {
         return manHole as ManHoleInterface;
     }
 
-    public async create(radio: number, material: Materials, decoration: boolean): Promise<ManHoleInterface> {
+    public create(radio: number, material: Materials, decoration: boolean) {
         const manHole = new ManHole(radio, material, decoration);
 
-        return manHole;
+        return manHole.toJSON();;
     }
 
-    /// COllection per request
-    private async getCollection() {
-        const url = 'mongodb://localhost:27017';
-        const client = await MongoClient.connect(url, mongodbOptions);
+    public async saveOnDB(obj: ManHoleInterface) {
+        const manHoleCollection = await this.getCollection();
+        await manHoleCollection.insertOne(obj);
+    }
 
-        const db = client.db('manHoleApp');
-        return db.collection('manHole');
+    public async clearDB() {
+        const manHoleCollection = await this.getCollection();
+        await manHoleCollection.deleteMany({});
+    }
+
+    public async seedDB() {
+        const manHoleCollection = await this.getCollection();
+        await manHoleCollection.insertMany(mockManHole);
+    }
+
+    public async getCollection() {
+        if (!this.client) {
+            this.client = await MongoClient.connect(MONGO_CONF.MONGO_URL, mongodbOptions);
+        }
+        this.db = this.client.db(MONGO_CONF.DEFAULT_DATABASE);
+
+        return getConnectionOrDefault(this.db);
     }
 }
-
-export default ManHoleMongo;

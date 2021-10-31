@@ -1,5 +1,5 @@
-import saveManholeCover from '../interactors/saveManholeCover.interactor';
 import ManHoleMongo from '../../sources/manHoleMongo.source';
+import saveManholeCover from '../interactors/saveManholeCover.interactor';
 
 const manholeRepository = new ManHoleMongo();
 

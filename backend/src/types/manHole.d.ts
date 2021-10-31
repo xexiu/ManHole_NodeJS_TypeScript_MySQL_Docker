@@ -1,15 +1,5 @@
-export enum Materials {
-    iron = 'iron',
-    steal = 'steal',
-    stone = 'stone'
-}
-
-export enum Sizes {
-    S = 'S',
-    M = 'M',
-    L = 'L',
-    XL = 'XL'
-}
+type Materials = 'iron' | 'steal' | 'stone';
+type Sizes = 'S' | ' M' | 'L' | 'XL';
 
 export type sizeOptions = {
     [key: string]: number[]
