@@ -27,7 +27,6 @@ function App() {
     e.preventDefault();
     const { radio, material, decoration } = values;
 
-    // checking if value of first name and last name is empty show error else take to next step
     if (!radio || !material) {
       setError(true);
     }
