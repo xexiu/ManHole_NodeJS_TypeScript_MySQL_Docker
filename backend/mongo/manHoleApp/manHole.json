@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "radio": 11,
+        "GUID": "1234",
+        "material": "iron",
+        "decoration": true,
+        "size": "S"
+    },
+    {
+        "id": "2",
+        "radio": 14,
+        "GUID": "5678",
+        "material": "steal",
+        "decoration": true,
+        "size": "S"
+    },
+    {
+        "id": "3",
+        "radio": 26,
+        "GUID": "91011",
+        "material": "stone",
+        "decoration": true,
+        "size": "XL"
+    }
+]
