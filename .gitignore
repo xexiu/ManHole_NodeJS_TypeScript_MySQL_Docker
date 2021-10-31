@@ -21,6 +21,11 @@ node_modules/**/*
 node_modules
 npm-debug.*
 coverage
+backend/dist
+
+# Ignores compiled TypeScript files
+**/wwwroot/backend/**/*.map
+**/wwwroot/backend/**/*.js
 
 # macOS
 .DS_Store
